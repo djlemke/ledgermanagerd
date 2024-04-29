@@ -1,0 +1,14 @@
+account Income
+account Expenses
+account Liabilities
+account Equity
+account Assets
+account Assets:Joint Checking
+account Assets:Cash
+account Assets:Miranda Checking
+account Assets:DCC1
+account Assets:DCC2
+account Assets:DCC3
+account Assets:MCC1
+account Assets:MCC2
+account Assets:MCC3

@@ -1,0 +1,8 @@
+J	Joint Checking
+M	Miranda Checking
+DCC1	Daniel Credit One
+DCC2	Daniel Capital One
+DCC3	Daniel Indigo
+MCC1	Miranda Capital One
+MCC2	Miranda Credit One 300
+MCC3	Miranda Credit One 1500

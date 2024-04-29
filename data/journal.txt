@@ -1,0 +1,11 @@
+2021/06/06 * Opening Balance
+	Assets:Joint Checking	?
+	Assets:Cash		?
+	Assets:Miranda Checking	?
+	Assets:DCC1		?
+	Assets:DCC2		?
+	Assets:DCC3		?
+	Assets:MCC1		?
+	Assets:MCC2		?
+	Assets:MCC3		?
+	Equity:Opening Balances

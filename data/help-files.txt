@@ -1,0 +1,2 @@
+commands	help/commands.tcl
+balance		help/balance.tcl

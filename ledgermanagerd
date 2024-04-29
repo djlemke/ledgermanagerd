@@ -1,0 +1,74 @@
+#!/data/data/com.termux/files/usr/bin/sh
+process_command () {
+	echo "process_command"
+	while read -r line; do
+		local number
+		local command
+		local args
+		local valid
+
+		number="$(echo "$line" | cut -f1)"
+		command="$(echo "$line" | cut -f3 | cut -d " " -f1)"
+		command="$(echo "$command" | tr '[:upper:]' '[:lower:]')"
+		args="$(echo "$line" | cut -f3 | cut -d " " -s -f2- |\
+			tr '[:upper:]' '[:lower:]')"
+		valid="$(grep -i "$command" data/allowed-commands.txt)"
+
+		if [ ! -z "$valid" -a "$valid" != " " ]; then
+			echo "$line" >> data/command-log.txt
+			if [ ! -z "$args" -a "$args" != " " ]; then
+				"./commands/$command.sh" "$number" "$args"
+			else
+				"./commands/$command.sh" "$number"
+			fi
+		else
+			echo "$line" >> data/command-log.txt
+			"./commands/help.sh" "$number"
+		fi
+	done
+}
+
+filter_processed () {
+	echo "filter_processed"
+	while read -r line; do
+		local processed
+		processed="$(grep "$line" data/command-log.txt)"
+
+		if [ -z "$processed" -o "$processed" = " " ]; then
+			echo "$line"
+		fi
+	done
+}
+
+filter_invalid () {
+	echo "filter_invalid"
+	local valid
+	local number
+
+	while read -r line; do
+		number="$(echo $line | cut -d " " -f1)"
+		valid="$(grep "$number" data/allowed-numbers.txt)"
+
+		if [ ! -z "$valid" -a "$valid" != " " ]; then
+			echo "$line"
+		fi
+	done
+}
+
+process_inbox () {
+	echo "process_inbox"
+	termux-sms-list -t inbox |\
+		jq -j '.[] | .number, "\t", .received, "\t", .body, "\n"' |\
+		filter_invalid |\
+		filter_processed |\
+		process_command
+}
+
+process_loop () {
+	echo "process_loop"
+	process_inbox
+	sleep 5s
+	process_loop
+}
+
+process_loop

@@ -1,0 +1,4 @@
+pkg install jq tcl termux-api termux-services cronie
+
+Boot script (copy an example over here)
+
